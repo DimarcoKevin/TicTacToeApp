@@ -37,8 +37,9 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun restart(view: View) {
-        // setting player 0 as starting player
+        // setting player 0 as starting player and resetting counter
         activePlayer = 0
+        counter = 0
 
         // clearing the tiles owned by each player
         player0.clear()
