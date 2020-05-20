@@ -133,9 +133,7 @@ class MainActivity : AppCompatActivity() {
             showResetButton()
         }
 
-
         buttonSelected.isEnabled = false
-
     }
 
     private fun checkWinner(selected: ArrayList<Int>, player: Int): Int{
@@ -156,6 +154,4 @@ class MainActivity : AppCompatActivity() {
         resetButton.isEnabled = true
         resetButton.text = "RESET"
     }
-
-
 }
