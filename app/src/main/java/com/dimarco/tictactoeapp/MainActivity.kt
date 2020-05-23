@@ -9,6 +9,7 @@ import android.widget.TableRow
 import androidx.core.view.isVisible
 import com.dimarco.tictactoeapp.R.*
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlin.random.Random
 
 class MainActivity : AppCompatActivity() {
     private val winningCombinations: Array<IntArray> = arrayOf(
@@ -114,6 +115,7 @@ class MainActivity : AppCompatActivity() {
             } else {
                 activePlayer = 1
                 counter ++
+                autoPlay() // this is the line to add AI
             }
 
         } else {
@@ -154,5 +156,34 @@ class MainActivity : AppCompatActivity() {
         resetButton.visibility = View.VISIBLE
         resetButton.isEnabled = true
         resetButton.text = "RESET"
+    }
+
+    fun autoPlay() {
+        var emptyCells = ArrayList<Int>()
+
+        for (cellId in 1..9)  {
+            if (!(player0.contains(cellId) || player1.contains(cellId))) {
+                emptyCells.add(cellId)
+            }
+        }
+
+        val r = java.util.Random()
+        val randomIndex = r.nextInt(emptyCells.size)
+        val cellId = emptyCells[randomIndex]
+
+        var buttonSelected:Button?
+        buttonSelected = when(cellId) {
+            1 -> button1
+            2 -> button2
+            3 -> button3
+            4 -> button4
+            5 -> button5
+            6 -> button6
+            7 -> button7
+            8 -> button8
+            9 -> button9
+            else -> {button1}
+        }
+        playGame(cellId, buttonSelected)
     }
 }
