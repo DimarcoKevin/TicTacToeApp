@@ -37,6 +37,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(layout.activity_main)
     }
 
+    // fully clear the board and reset for a new game
     fun restart(view: View) {
         // setting player 0 as starting player and resetting counter
         activePlayer = 0
@@ -83,6 +84,7 @@ class MainActivity : AppCompatActivity() {
         button9.setBackgroundResource(R.color.tile)
     }
 
+    // method on each clickable button
     fun buttonClick(view: View) {
         val buttonSelected = view as Button
         var cellId = 0
@@ -99,12 +101,12 @@ class MainActivity : AppCompatActivity() {
             id.button8 -> cellId = 8
             id.button9 -> cellId = 9
         }
-        // Log.d("cellId:", cellId.toString())
         playGame(cellId, buttonSelected)
     }
 
+    // Main function
+    // called each time a player makes a move
     private fun playGame(cellId: Int, buttonSelected: Button) {
-
         if (activePlayer == 0) {
             buttonSelected.text = "O"
             buttonSelected.setBackgroundResource(R.color.Blue)
@@ -139,6 +141,7 @@ class MainActivity : AppCompatActivity() {
         buttonSelected.isEnabled = false
     }
 
+    // checks for winner after each move
     private fun checkWinner(selected: ArrayList<Int>, player: Int): Int{
         for (combo in winningCombinations) {
             if (selected.contains(combo[0]) && selected.contains(combo[1]) && selected.contains(combo[2])) {
@@ -148,17 +151,20 @@ class MainActivity : AppCompatActivity() {
         return -1
     }
 
+    // displays the winning message
     private fun gameOver(player: Char) {
         label.text = "You win! Congrats player: $player"
     }
 
+    // shows the reset button when a game has ended
     private fun showResetButton() {
         resetButton.visibility = View.VISIBLE
         resetButton.isEnabled = true
         resetButton.text = "RESET"
     }
 
-    fun autoPlay() {
+    // adds computer opponent (They are randomly selected moves)
+    private fun autoPlay() {
         var emptyCells = ArrayList<Int>()
 
         for (cellId in 1..9)  {
