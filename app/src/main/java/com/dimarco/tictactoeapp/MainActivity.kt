@@ -27,7 +27,7 @@ class MainActivity : AppCompatActivity() {
     private var activePlayer = 0
     private var counter = 0
 
-    // initalizing arraylists for chosen buttons
+    // initializing array lists for chosen buttons
     private var player = ArrayList<Int>()
     private var computer = ArrayList<Int>()
 
@@ -166,8 +166,6 @@ class MainActivity : AppCompatActivity() {
     // adds computer opponent (They are randomly selected moves)
     private fun autoPlay() {
         var emptyCells = ArrayList<Int>()
-        var playerCells = ArrayList<Int>()
-        var computerCells = ArrayList<Int>()
 
         for (cellId in 1..9)  {
             if (!(player.contains(cellId) || computer.contains(cellId))) {
