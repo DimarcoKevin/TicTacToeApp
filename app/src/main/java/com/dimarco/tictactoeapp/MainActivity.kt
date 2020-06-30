@@ -163,7 +163,33 @@ class MainActivity : AppCompatActivity() {
         resetButton.text = "RESET"
     }
 
-    // adds computer opponent (They are randomly selected moves)
+
+
+
+
+
+    // checks if the player or computer is one move away from winning
+    private fun checkUno(): Int {
+        for (combo in winningCombinations) {
+            if (computer.contains(combo[0]) && computer.contains(combo[1]))  {
+                return combo[2]
+            } else if (computer.contains(combo[1]) && computer.contains(combo[2])) {
+                return combo[0]
+            } else if (computer.contains(combo[2]) && computer.contains(combo[0])) {
+                return combo[1]
+            } else if (player.contains(combo[0]) && player.contains(combo[1]))  {
+                return combo[2]
+            } else if (player.contains(combo[1]) && player.contains(combo[2])) {
+                return combo[0]
+            } else if (player.contains(combo[2]) && player.contains(combo[0])) {
+                return combo[1]
+            }
+        }
+        return -1
+    }
+
+
+    // adds computer opponent (They are randomly selected moves currently)
     private fun autoPlay() {
         var emptyCells = ArrayList<Int>()
 
@@ -173,9 +199,24 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-        val r = java.util.Random()
-        val randomIndex = r.nextInt(emptyCells.size)
-        val cellId = emptyCells[randomIndex]
+        // TODO : Add AI
+        // First: check if player / computer is one move away from winning (completed!)
+        // Second: check who holds middle and corner tiles
+
+        var uno = checkUno()
+        var cellId: Int
+        if (uno > 0 && emptyCells.contains(uno)) {
+            cellId = uno
+        } else {
+            // this is using randomly selected empty cells
+            val r = java.util.Random()
+            val randomIndex = r.nextInt(emptyCells.size)
+            cellId = emptyCells[randomIndex]
+        }
+
+
+
+
 
         var buttonSelected:Button?
         buttonSelected = when(cellId) {
