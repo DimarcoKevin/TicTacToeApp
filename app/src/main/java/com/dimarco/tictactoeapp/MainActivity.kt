@@ -9,6 +9,8 @@ import android.widget.TableRow
 import androidx.core.view.isVisible
 import com.dimarco.tictactoeapp.R.*
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.one_player_two_player.*
+import java.util.function.BooleanSupplier
 import kotlin.random.Random
 
 class MainActivity : AppCompatActivity() {
@@ -22,6 +24,8 @@ class MainActivity : AppCompatActivity() {
         intArrayOf(1, 5, 9),
         intArrayOf(3, 5, 7)
     )
+    // tells if the user picked single player or two player
+    private var artificialIntelligence = false
 
     // initializing variable to tell whose turn it is and variable to count number of turns
     private var activePlayer = 0
@@ -34,6 +38,15 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setContentView(layout.one_player_two_player)
+    }
+
+    // methods to move from start up page to game
+    fun chooseSinglePlayer(view: View) {
+        setContentView(layout.activity_main)
+        artificialIntelligence = true
+    }
+    fun chooseTwoPlayer(view: View) {
         setContentView(layout.activity_main)
     }
 
@@ -117,7 +130,7 @@ class MainActivity : AppCompatActivity() {
             } else {
                 activePlayer = 1
                 counter ++
-                autoPlay() // this is the line to add AI
+                if (artificialIntelligence) autoPlay()
             }
 
         } else {
