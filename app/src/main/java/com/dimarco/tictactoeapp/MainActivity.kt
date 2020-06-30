@@ -176,20 +176,35 @@ class MainActivity : AppCompatActivity() {
         resetButton.text = "RESET"
     }
 
+    // this method returns a list of the empty cells
+    fun checkEmptyCells(): ArrayList<Int> {
+        var emptyCells = ArrayList<Int>()
+
+        for (cellId in 1..9)  {
+            if (!(player.contains(cellId) || computer.contains(cellId))) {
+                emptyCells.add(cellId)
+            }
+        }
+        return emptyCells
+    }
+
+
     // checks if the player or computer is one move away from winning
     private fun checkUno(): Int {
+        val emptyCells = checkEmptyCells()
+
         for (combo in winningCombinations) {
-            if (computer.contains(combo[0]) && computer.contains(combo[1]))  {
+            if (computer.contains(combo[0]) && computer.contains(combo[1]) && emptyCells.contains(combo[2]))  {
                 return combo[2]
-            } else if (computer.contains(combo[1]) && computer.contains(combo[2])) {
+            } else if (computer.contains(combo[1]) && computer.contains(combo[2]) && emptyCells.contains(combo[0])) {
                 return combo[0]
-            } else if (computer.contains(combo[2]) && computer.contains(combo[0])) {
+            } else if (computer.contains(combo[2]) && computer.contains(combo[0]) && emptyCells.contains(combo[1])) {
                 return combo[1]
-            } else if (player.contains(combo[0]) && player.contains(combo[1]))  {
+            } else if (player.contains(combo[0]) && player.contains(combo[1]) && emptyCells.contains(combo[2]))  {
                 return combo[2]
-            } else if (player.contains(combo[1]) && player.contains(combo[2])) {
+            } else if (player.contains(combo[1]) && player.contains(combo[2]) && emptyCells.contains(combo[0])) {
                 return combo[0]
-            } else if (player.contains(combo[2]) && player.contains(combo[0])) {
+            } else if (player.contains(combo[2]) && player.contains(combo[0]) && emptyCells.contains(combo[1])) {
                 return combo[1]
             }
         }
@@ -198,13 +213,7 @@ class MainActivity : AppCompatActivity() {
 
     // adds computer opponent (They are randomly selected moves currently)
     private fun autoPlay() {
-        var emptyCells = ArrayList<Int>()
 
-        for (cellId in 1..9)  {
-            if (!(player.contains(cellId) || computer.contains(cellId))) {
-                emptyCells.add(cellId)
-            }
-        }
 
         // TODO : Add AI
         // First: check if player / computer is one move away from winning (completed!)
@@ -212,10 +221,11 @@ class MainActivity : AppCompatActivity() {
 
         var uno = checkUno()
         var cellId: Int
-        if (uno > 0 && emptyCells.contains(uno)) {
+        if (uno > 0) {
             cellId = uno
         } else {
             // this is using randomly selected empty cells
+            val emptyCells = checkEmptyCells()
             val r = java.util.Random()
             val randomIndex = r.nextInt(emptyCells.size)
             cellId = emptyCells[randomIndex]
