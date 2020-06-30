@@ -28,8 +28,8 @@ class MainActivity : AppCompatActivity() {
     private var counter = 0
 
     // initalizing arraylists for chosen buttons
-    private var player0 = ArrayList<Int>()
-    private var player1 = ArrayList<Int>()
+    private var player = ArrayList<Int>()
+    private var computer = ArrayList<Int>()
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -44,8 +44,8 @@ class MainActivity : AppCompatActivity() {
         counter = 0
 
         // clearing the tiles owned by each player
-        player0.clear()
-        player1.clear()
+        player.clear()
+        computer.clear()
 
         // hiding the reset button
         resetButton.visibility = View.INVISIBLE
@@ -110,8 +110,8 @@ class MainActivity : AppCompatActivity() {
         if (activePlayer == 0) {
             buttonSelected.text = "O"
             buttonSelected.setBackgroundResource(R.color.Blue)
-            player0.add(cellId)
-            if (checkWinner(player0, activePlayer) == 0) {
+            player.add(cellId)
+            if (checkWinner(player, activePlayer) == 0) {
                 gameOver('O')
                 showResetButton()
             } else {
@@ -123,8 +123,8 @@ class MainActivity : AppCompatActivity() {
         } else {
             buttonSelected.text = "X"
             buttonSelected.setBackgroundResource(R.color.Red)
-            player1.add(cellId)
-            if (checkWinner(player1, activePlayer) == 1) {
+            computer.add(cellId)
+            if (checkWinner(computer, activePlayer) == 1) {
                 gameOver('X')
                 showResetButton()
             } else {
@@ -166,9 +166,11 @@ class MainActivity : AppCompatActivity() {
     // adds computer opponent (They are randomly selected moves)
     private fun autoPlay() {
         var emptyCells = ArrayList<Int>()
+        var playerCells = ArrayList<Int>()
+        var computerCells = ArrayList<Int>()
 
         for (cellId in 1..9)  {
-            if (!(player0.contains(cellId) || player1.contains(cellId))) {
+            if (!(player.contains(cellId) || computer.contains(cellId))) {
                 emptyCells.add(cellId)
             }
         }
