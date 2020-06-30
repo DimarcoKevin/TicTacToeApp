@@ -176,11 +176,6 @@ class MainActivity : AppCompatActivity() {
         resetButton.text = "RESET"
     }
 
-
-
-
-
-
     // checks if the player or computer is one move away from winning
     private fun checkUno(): Int {
         for (combo in winningCombinations) {
@@ -200,7 +195,6 @@ class MainActivity : AppCompatActivity() {
         }
         return -1
     }
-
 
     // adds computer opponent (They are randomly selected moves currently)
     private fun autoPlay() {
