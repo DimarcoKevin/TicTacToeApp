@@ -120,6 +120,7 @@ class MainActivity : AppCompatActivity() {
     // Main function
     // called each time a player makes a move
     private fun playGame(cellId: Int, buttonSelected: Button) {
+
         if (activePlayer == 0) {
             buttonSelected.text = "O"
             buttonSelected.setBackgroundResource(R.color.Blue)
@@ -130,6 +131,13 @@ class MainActivity : AppCompatActivity() {
             } else {
                 activePlayer = 1
                 counter ++
+
+                if (counter == 9) {
+                    label.text = "It's a draw!"
+                    showResetButton()
+                    return
+                }
+
                 if (artificialIntelligence) autoPlay()
             }
 
@@ -146,10 +154,7 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-        if (counter == 9) {
-            label.text = "It's a draw!"
-            showResetButton()
-        }
+
 
         buttonSelected.isEnabled = false
     }
@@ -177,7 +182,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     // this method returns a list of the empty cells
-    fun checkEmptyCells(): ArrayList<Int> {
+    private fun checkEmptyCells(): ArrayList<Int> {
         var emptyCells = ArrayList<Int>()
 
         for (cellId in 1..9)  {
@@ -213,27 +218,20 @@ class MainActivity : AppCompatActivity() {
 
     // adds computer opponent (They are randomly selected moves currently)
     private fun autoPlay() {
-
-
         // TODO : Add AI
         // First: check if player / computer is one move away from winning (completed!)
         // Second: check who holds middle and corner tiles
 
         var uno = checkUno()
-        var cellId: Int
-        if (uno > 0) {
-            cellId = uno
+        var cellId = if (uno > 0) {
+            uno
         } else {
             // this is using randomly selected empty cells
             val emptyCells = checkEmptyCells()
             val r = java.util.Random()
             val randomIndex = r.nextInt(emptyCells.size)
-            cellId = emptyCells[randomIndex]
+            emptyCells[randomIndex]
         }
-
-
-
-
 
         var buttonSelected:Button?
         buttonSelected = when(cellId) {
